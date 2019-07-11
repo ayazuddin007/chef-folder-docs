@@ -1,0 +1,91 @@
+creating cookbook (be in cookbooks folder)
+----------------------------------------------
+chef generate cookbook <cookbook name>
+eg:
+chef generate cookbook apache-cookbook
+
+creating recipe in cookbook (be in created cookbook folder i.e apache-cookbook)
+-------------------------------------------------------------------------------
+chef generate recipe <recipe name>
+eg:
+chef generate recipe apache-recipe
+
+checking syntax of created recipe (be in parent cookbooks folder)
+-----------------------------------------------------------------
+chef exec ruby -c <path of created cookbook recipe>
+eg:
+chef exec ruby -c apache-cookbook/recipes/apache-recipe
+
+execution of specific cookbook recipe by chef-client(be in parent cookbooks folder)
+-----------------------------------------------------------------------------------
+sudo chef-client -zr "recipe[cookbook::recipe]"
+eg:
+sudo chef-client -zr "recipe[apache-cookbook::apache-recipe]"
+
+Attaching Nodes to chef Server (be in chef repo folder)
+-------------------------------------------------------
+knife bootstrap <node private ip> --ssh-user ec2-user --sudo --identity-file <node pem key> -N <any node name>
+eg:
+knife bootstrap 172.31.25.229 --ssh-user ec2-user --sudo --identity-file linuxKP.pem -N node1
+knife bootstrap 172.31.27.139 --ssh-user ec2-user --sudo --identity-file linuxKP.pem -N node2
+
+
+Uploading cookbook to Server (be in chef repo folder)
+--------------------------------------------------------
+knife cookbook upload <cookbook name> 
+eg:
+knife cookbook upload apache-cookbook
+
+
+Adding cookbook to Node Runlist (be in chef repo folder)
+--------------------------------------------------------
+knife node run_list set <node name> "recipe[cookbook::recipe]"
+eg:
+knife node run_list set node1 "recipe[apache-cookbook::apache-recipe]"
+knife node run_list set node2 "recipe[apache-cookbook::apache-recipe]"
+
+
+Verifying the Node Runlist (be in chef repo folder)
+--------------------------------------------------- 
+knife node show <node name>
+eg:
+knife node show node1
+knife node show node2
+
+Execute chef-client command in nodes
+---------------------------------------
+chef-client
+
+Listing cookbook in chef Server (be in chef repo folder)
+--------------------------------------------------------
+knife cookbook list
+
+Deleting cookbook in chef Server (be in chef repo folder)
+---------------------------------------------------------
+knife cookbook delete <cookbook name> -y
+eg:
+knife cookbook delete apache-cookbook -y
+
+Deleting node in chef Server (be in chef repo folder)
+-----------------------------------------------------
+knife node delete <node name>
+eg:
+knife node delete node1
+knife node delete node2
+
+Berkshelf:
+---------
+Berkshelf is a dependency management tool that can install or upload the full dependency chain for a cookbook without us needing to hunt them down individually.
+  berks install (to install cookbooks locally)
+  berks upload (and to upload them to the chef server)
+
+Uploading a Role (be in chef repo folder)
+-------------------------------------------
+knife role from file roles/web.rb
+
+Attaching a Role to Nodes  (be in chef repo folder)
+---------------------------------------------------
+knife node run_list set <node name> "role[role name]"
+eg:
+knife node run_list set ND1 "role[web]"
+knife node run_list set ND2 "role[web]"
