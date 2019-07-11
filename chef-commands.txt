@@ -1,22 +1,22 @@
-creating cookbook (be in cookbooks folder)
+Creating cookbook (be in cookbooks folder)
 ----------------------------------------------
 chef generate cookbook <cookbook name>
 eg:
 chef generate cookbook apache-cookbook
 
-creating recipe in cookbook (be in created cookbook folder i.e apache-cookbook)
+Creating recipe in cookbook (be in created cookbook folder i.e apache-cookbook)
 -------------------------------------------------------------------------------
 chef generate recipe <recipe name>
 eg:
 chef generate recipe apache-recipe
 
-checking syntax of created recipe (be in parent cookbooks folder)
+Checking syntax of created recipe (be in parent cookbooks folder)
 -----------------------------------------------------------------
 chef exec ruby -c <path of created cookbook recipe>
 eg:
 chef exec ruby -c apache-cookbook/recipes/apache-recipe
 
-execution of specific cookbook recipe by chef-client(be in parent cookbooks folder)
+Execution of specific cookbook recipe by chef-client(be in parent cookbooks folder)
 -----------------------------------------------------------------------------------
 sudo chef-client -zr "recipe[cookbook::recipe]"
 eg:
